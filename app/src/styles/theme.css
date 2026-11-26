@@ -1,0 +1,140 @@
+/*
+  Colours for the whole app, as CSS variables ("design tokens").
+
+  The look: warm paper with a dotted background, firm outlines, hard offset shadows and one calm
+  sage-green accent. Light mode is cream; dark mode is warm charcoal.
+
+  Light mode is the default for everyone. Dark mode only applies when the user picks it with the
+  toggle (saved in localStorage and applied by index.html before the page draws).
+*/
+:root {
+  color-scheme: light;
+  --bg: #efede7;
+  --dot: rgb(43 43 40 / 13%);
+  --surface: #faf9f6;
+  --surface-2: #f0eee8;
+  --line: #2b2b28;
+  --line-soft: #cfccc3;
+  --hard: #2b2b28;
+  --text: #1f1f1d;
+  --muted: #5f5e58;
+
+  /* Sage: the brand and primary accent. */
+  --accent: #67724f;
+  --accent-hover: #59633f;
+  --accent-soft: #e2e7d6;
+  --accent-text: #4f5a39;
+  --on-accent: #ffffff;
+  --focus: #4f5a39;
+
+  /* Feedback */
+  --ok: #3f7a3a;
+  --ok-soft: #dcebd4;
+  --warn: #8a6a12;
+  --warn-soft: #f4e8c4;
+  --danger: #a63d32;
+  --danger-soft: #f4dcd7;
+  --btn-approve: #67724f;
+  --btn-reject: #a63d32;
+
+  /* One muted colour per role. */
+  --role-register: #4f7a66;
+  --role-register-soft: #dfeae3;
+  --role-intern: #a8692f;
+  --role-intern-soft: #f3e6d8;
+  --role-supervisor: #a35566;
+  --role-supervisor-soft: #f2e0e3;
+  --role-verify: #5c6470;
+  --role-verify-soft: #e4e6e9;
+
+  /* Day and page states (text/border colour, then background). */
+  --st-approved: #3f7a3a;
+  --st-approved-bg: #dcebd4;
+  --st-auto: #2f7a80;
+  --st-auto-bg: #d6ebeb;
+  --st-rejected: #a63d32;
+  --st-rejected-bg: #f4dcd7;
+  --st-pending: #806210;
+  --st-pending-bg: #f4e8c4;
+  --st-silent: #7a5000;
+  --st-silent-bg: #f0d496;
+  --st-missing: #66655e;
+  --st-missing-bg: #e4e2dc;
+  --st-today: #4f5a39;
+  --st-today-bg: #e2e7d6;
+  --st-upcoming: #8f8d86;
+  --stripe: rgb(255 255 255 / 65%);
+  --hatch: rgb(102 101 94 / 22%);
+
+  /* The stamp ink and the sample paper. */
+  --stamp-ink: #b3372f;
+  --stamp-auto-ink: #2f7a80;
+  --paper: #fffdf7;
+  --paper-line: #e8e1cf;
+  --paper-text: #2b2b2b;
+
+  --radius: 6px;
+  --radius-small: 4px;
+  --border-width: 2px;
+  --shadow: 4px 4px 0 var(--hard);
+  --shadow-small: 3px 3px 0 var(--hard);
+  --font: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #141613;
+  --dot: rgb(232 230 223 / 7%);
+  --surface: #1c1f1b;
+  --surface-2: #242822;
+  --line: #6b7563;
+  --line-soft: #3d4438;
+  --hard: #46503c;
+  --text: #e8e6df;
+  --muted: #a6a99d;
+  --accent: #a3b18a;
+  --accent-hover: #b4c19c;
+  --accent-soft: #283024;
+  --accent-text: #b9c6a1;
+  --on-accent: #161a13;
+  --focus: #c3d0aa;
+  --ok: #8fca7f;
+  --ok-soft: #1e2b1b;
+  --warn: #e0c060;
+  --warn-soft: #2f2914;
+  --danger: #e48a7f;
+  --danger-soft: #331c19;
+  --btn-approve: #a3b18a;
+  --btn-reject: #c9675b;
+  --role-register: #8fbfa8;
+  --role-register-soft: #1d2a24;
+  --role-intern: #d9a066;
+  --role-intern-soft: #2d2319;
+  --role-supervisor: #d495a3;
+  --role-supervisor-soft: #2d1f23;
+  --role-verify: #a9b1bc;
+  --role-verify-soft: #22262b;
+  --st-approved: #8fca7f;
+  --st-approved-bg: #1e2b1b;
+  --st-auto: #6fc3c9;
+  --st-auto-bg: #16292a;
+  --st-rejected: #e48a7f;
+  --st-rejected-bg: #331c19;
+  --st-pending: #e0c060;
+  --st-pending-bg: #2f2914;
+  --st-silent: #f0c870;
+  --st-silent-bg: #3a2e12;
+  --st-missing: #a6a99d;
+  --st-missing-bg: #262924;
+  --st-today: #b9c6a1;
+  --st-today-bg: #283024;
+  --st-upcoming: #7d8075;
+  --stripe: rgb(255 255 255 / 9%);
+  --hatch: rgb(166 169 157 / 16%);
+  --stamp-ink: #e0675d;
+  --stamp-auto-ink: #6fc3c9;
+  --paper: #f7f3e8;
+  --paper-line: #ddd3bb;
+  --paper-text: #2b2b2b;
+}

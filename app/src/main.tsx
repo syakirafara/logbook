@@ -1,0 +1,14 @@
+// Entry point: load the styles, then draw <App /> into <div id="root"> in index.html.
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import '@fontsource-variable/inter';
+import '@solana/wallet-adapter-react-ui/styles.css';
+import './styles/theme.css';
+import './styles/app.css';
+import App from './App.tsx';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);

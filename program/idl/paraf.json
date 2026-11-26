@@ -1,0 +1,511 @@
+{
+  "version": "0.1.0",
+  "name": "paraf",
+  "instructions": [
+    {
+      "name": "registerInternship",
+      "accounts": [
+        {
+          "name": "internship",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "coordinator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "internshipId",
+          "type": "u64"
+        },
+        {
+          "name": "intern",
+          "type": "publicKey"
+        },
+        {
+          "name": "supervisor",
+          "type": "publicKey"
+        },
+        {
+          "name": "hostOrg",
+          "type": "string"
+        },
+        {
+          "name": "startTs",
+          "type": "i64"
+        },
+        {
+          "name": "periodSecs",
+          "type": "u32"
+        },
+        {
+          "name": "reviewSecs",
+          "type": "u32"
+        },
+        {
+          "name": "totalPeriods",
+          "type": "u16"
+        },
+        {
+          "name": "stipendPerPeriod",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "submitEntry",
+      "accounts": [
+        {
+          "name": "internship",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "entry",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "intern",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "periodIndex",
+          "type": "u16"
+        },
+        {
+          "name": "summary",
+          "type": "string"
+        },
+        {
+          "name": "detailHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "reviewEntry",
+      "accounts": [
+        {
+          "name": "internship",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "entry",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "supervisor",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "approve",
+          "type": "bool"
+        },
+        {
+          "name": "reasonCode",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "finalizeEntry",
+      "accounts": [
+        {
+          "name": "internship",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "entry",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claimStipend",
+      "accounts": [
+        {
+          "name": "internship",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "intern",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Internship",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "intern",
+            "type": "publicKey"
+          },
+          {
+            "name": "supervisor",
+            "type": "publicKey"
+          },
+          {
+            "name": "coordinator",
+            "type": "publicKey"
+          },
+          {
+            "name": "internshipId",
+            "type": "u64"
+          },
+          {
+            "name": "startTs",
+            "type": "i64"
+          },
+          {
+            "name": "periodSecs",
+            "type": "u32"
+          },
+          {
+            "name": "reviewSecs",
+            "type": "u32"
+          },
+          {
+            "name": "totalPeriods",
+            "type": "u16"
+          },
+          {
+            "name": "stipendPerPeriod",
+            "type": "u64"
+          },
+          {
+            "name": "submittedCount",
+            "type": "u16"
+          },
+          {
+            "name": "approvedCount",
+            "type": "u16"
+          },
+          {
+            "name": "autoApprovedCount",
+            "type": "u16"
+          },
+          {
+            "name": "rejectedCount",
+            "type": "u16"
+          },
+          {
+            "name": "paidCount",
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "hostOrg",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Entry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "internship",
+            "type": "publicKey"
+          },
+          {
+            "name": "periodIndex",
+            "type": "u16"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "EntryStatus"
+            }
+          },
+          {
+            "name": "reasonCode",
+            "type": "u8"
+          },
+          {
+            "name": "submittedAt",
+            "type": "i64"
+          },
+          {
+            "name": "reviewedAt",
+            "type": "i64"
+          },
+          {
+            "name": "detailHash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "EntryStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Approved"
+          },
+          {
+            "name": "Rejected"
+          },
+          {
+            "name": "AutoApproved"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "InternshipRegistered",
+      "fields": [
+        {
+          "name": "internship",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "intern",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "supervisor",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "coordinator",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "totalStipend",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "EntrySubmitted",
+      "fields": [
+        {
+          "name": "internship",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "periodIndex",
+          "type": "u16",
+          "index": false
+        },
+        {
+          "name": "submittedAt",
+          "type": "i64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "EntryReviewed",
+      "fields": [
+        {
+          "name": "internship",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "periodIndex",
+          "type": "u16",
+          "index": false
+        },
+        {
+          "name": "approved",
+          "type": "bool",
+          "index": false
+        },
+        {
+          "name": "reasonCode",
+          "type": "u8",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "EntryAutoApproved",
+      "fields": [
+        {
+          "name": "internship",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "periodIndex",
+          "type": "u16",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "StipendClaimed",
+      "fields": [
+        {
+          "name": "internship",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "days",
+          "type": "u16",
+          "index": false
+        },
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "SupervisorIsIntern",
+      "msg": "Supervisor and intern must be different wallets"
+    },
+    {
+      "code": 6001,
+      "name": "HostOrgTooLong",
+      "msg": "Host organisation name is too long (max 40 bytes)"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSchedule",
+      "msg": "Invalid schedule: check the start time, day length, review window and number of days"
+    },
+    {
+      "code": 6003,
+      "name": "MathOverflow",
+      "msg": "Number too large"
+    },
+    {
+      "code": 6004,
+      "name": "NotStarted",
+      "msg": "The internship has not started yet"
+    },
+    {
+      "code": 6005,
+      "name": "InternshipEnded",
+      "msg": "The internship has already ended"
+    },
+    {
+      "code": 6006,
+      "name": "NotCurrentPeriod",
+      "msg": "You can only write the page for today"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidSummary",
+      "msg": "Summary must be between 1 and 160 bytes"
+    },
+    {
+      "code": 6008,
+      "name": "NotIntern",
+      "msg": "Only the intern of this internship can do this"
+    },
+    {
+      "code": 6009,
+      "name": "NotSupervisor",
+      "msg": "Only the supervisor of this internship can do this"
+    },
+    {
+      "code": 6010,
+      "name": "WrongInternship",
+      "msg": "This page belongs to a different internship"
+    },
+    {
+      "code": 6011,
+      "name": "NotPending",
+      "msg": "This page has already been reviewed"
+    },
+    {
+      "code": 6012,
+      "name": "ReviewWindowClosed",
+      "msg": "The review window has closed"
+    },
+    {
+      "code": 6013,
+      "name": "ReviewWindowOpen",
+      "msg": "The review window is still open"
+    },
+    {
+      "code": 6014,
+      "name": "NothingToClaim",
+      "msg": "Nothing to claim yet"
+    },
+    {
+      "code": 6015,
+      "name": "InsufficientFunds",
+      "msg": "Not enough stipend left in this internship"
+    }
+  ]
+}

@@ -1,0 +1,1736 @@
+/*
+  Layout and components. Colours come from the variables in theme.css.
+
+  The look, in short: a dotted paper background, firm 2px outlines, hard offset shadows (no blur),
+  small uppercase labels, and buttons that "press into" their shadow when clicked.
+*/
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  /* The dotted paper. */
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px);
+  background-size: 22px 22px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+a {
+  color: var(--accent-text);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.help {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Small uppercase label above a heading, e.g. "CARA KERJA". */
+.eyebrow,
+.role-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Page layout ---------- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--surface);
+  border-bottom: var(--border-width) solid var(--line);
+}
+
+.header-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* The logo tile, with a small hard shadow like the cards. */
+.brand-mark {
+  display: inline-flex;
+  border: var(--border-width) solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--shadow-small);
+  overflow: hidden;
+}
+
+.brand-mark svg {
+  display: block;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.network-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 3px 9px;
+}
+
+.main {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.panel,
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.footer {
+  width: 100%;
+  max-width: 1040px;
+  margin: 24px auto 0;
+  /* Extra space at the bottom so the transaction pop-ups never cover the footer text. */
+  padding: 18px 20px 112px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  display: grid;
+  gap: 6px;
+  border-top: var(--border-width) dashed var(--line-soft);
+}
+
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+/* A centred label + heading that opens a section, like "CARA KERJA / Empat aturan…". */
+.section-head {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.section-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* ---------- Wallet button and pop-ups (from @solana/wallet-adapter-react-ui) ---------- */
+.wallet-adapter-button {
+  font-family: var(--font);
+  height: 42px;
+  border-radius: var(--radius-small);
+  padding: 0 14px;
+  font-size: 0.875rem;
+}
+
+/* The main wallet button (not the rows inside the pop-up). */
+.wallet-adapter-button-trigger {
+  color: var(--on-accent);
+  background-color: var(--accent);
+  border: var(--border-width) solid var(--line);
+  box-shadow: var(--shadow-small);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background-color 0.15s ease;
+}
+
+.wallet-adapter-button-trigger:not([disabled]):hover {
+  background-color: var(--accent-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--hard);
+}
+
+.wallet-adapter-button-trigger:not([disabled]):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--hard);
+}
+
+.wallet-adapter-dropdown-list {
+  background: var(--surface);
+  color: var(--text);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-family: var(--font);
+}
+
+.wallet-adapter-dropdown-list-item {
+  color: var(--text);
+  font-family: var(--font);
+  border-radius: var(--radius-small);
+}
+
+.wallet-adapter-dropdown-list-item:not([disabled]):hover {
+  background-color: var(--accent-soft);
+}
+
+.wallet-adapter-modal-wrapper {
+  background: var(--surface);
+  color: var(--text);
+  border: var(--border-width) solid var(--line);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--hard);
+  font-family: var(--font);
+}
+
+.wallet-adapter-modal-button-close {
+  background: var(--surface-2);
+}
+
+.wallet-adapter-modal-button-close svg {
+  fill: var(--muted);
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:not([disabled]):hover {
+  background-color: var(--accent-soft);
+}
+
+.wallet-adapter-modal-list-more {
+  color: var(--muted);
+  font-family: var(--font);
+}
+
+/* The picker's title is fixed English text in the library, so it is swapped here. */
+.wallet-adapter-modal-title {
+  color: var(--text);
+  font-size: 0;
+}
+
+.wallet-adapter-modal-title::after {
+  content: 'Pilih dompet Solana untuk melanjutkan';
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ---------- Role colours ---------- */
+.role-register {
+  --role: var(--role-register);
+  --role-soft: var(--role-register-soft);
+}
+
+.role-intern {
+  --role: var(--role-intern);
+  --role-soft: var(--role-intern-soft);
+}
+
+.role-supervisor {
+  --role: var(--role-supervisor);
+  --role-soft: var(--role-supervisor-soft);
+}
+
+.role-verify {
+  --role: var(--role-verify);
+  --role-soft: var(--role-verify-soft);
+}
+
+/* ---------- Tabs ---------- */
+.roles {
+  display: grid;
+  gap: 18px;
+  scroll-margin-top: 80px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 12px 14px;
+  background: var(--surface);
+  color: var(--text);
+  border: var(--border-width) solid var(--line);
+  border-top: 6px solid var(--role);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.14s ease,
+    background-color 0.18s ease;
+}
+
+.tab:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--hard);
+}
+
+/* The chosen tab sits "pressed in". */
+.tab[aria-selected='true'] {
+  background: var(--role-soft);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--hard);
+}
+
+.tab-name {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.tab[aria-selected='true'] .tab-name {
+  color: var(--role);
+}
+
+.tab-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.role-header {
+  display: grid;
+  gap: 4px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-left: 7px solid var(--role);
+  border-radius: var(--radius);
+}
+
+.role-pill {
+  color: var(--role);
+}
+
+.role-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.role-header p {
+  color: var(--muted);
+}
+
+/* The panel fades in a little when you switch tabs. */
+.panel {
+  animation: panel-in 0.28s ease both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* ---------- Hero (the intro at the top) ---------- */
+.hero {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 32px;
+  padding: 36px 4px 12px;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* A small sage square before the label. */
+.hero-eyebrow::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border: var(--border-width) solid var(--line);
+}
+
+.hero-title {
+  font-size: clamp(1.9rem, 3.8vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+/* A highlighter stroke under the key words. */
+.hero-title mark {
+  color: inherit;
+  background: linear-gradient(transparent 60%, var(--accent-soft) 60%, var(--accent-soft) 92%, transparent 92%);
+  padding: 0 0.06em;
+}
+
+.hero-text {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 54ch;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.hero-actions .btn {
+  min-height: 46px;
+  padding: 0 22px;
+}
+
+/* The sample logbook page, tilted a little, with the stamp on it. */
+.hero-art {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+.sample-button {
+  display: block;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sample-button:hover {
+  transform: translateY(-3px) rotate(-0.5deg);
+}
+
+.sample-page {
+  position: relative;
+  width: min(100%, 340px);
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 16px;
+  color: var(--paper-text);
+  background:
+    repeating-linear-gradient(transparent 0 27px, var(--paper-line) 27px 28px) 0 44px / 100% calc(100% - 44px) no-repeat,
+    var(--paper);
+  border: var(--border-width) solid #2b2b28;
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--hard);
+  transform: rotate(2deg);
+}
+
+.sample-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.9rem;
+}
+
+.sample-head span {
+  color: #6b6b6b;
+  font-size: 0.8rem;
+}
+
+.sample-line {
+  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  font-size: 0.92rem;
+  line-height: 28px;
+}
+
+.sample-line.short {
+  max-width: 80%;
+}
+
+.sample-week {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* Inside the sample page the cells always use light colours, like paper. */
+.sample-week .cell {
+  cursor: default;
+  font-size: 0.7rem;
+  border-width: 1.5px;
+}
+
+.sample-week .state-approved {
+  --st: #3f7a3a;
+  --st-bg: #dcebd4;
+}
+
+.sample-week .state-autoApproved {
+  --st: #2f7a80;
+  --st-bg: #d6ebeb;
+}
+
+.sample-week .state-missing {
+  --st: #66655e;
+  --st-bg: #e4e2dc;
+}
+
+.sample-week .state-today {
+  --st: #4f5a39;
+  --st-bg: #e2e7d6;
+}
+
+.sample-week .state-upcoming {
+  --st: #8f8d86;
+}
+
+.sample-stamp {
+  position: absolute;
+  right: 2px;
+  bottom: 58px;
+  font-size: 1.8rem;
+}
+
+.sample-stamp .stamp {
+  --ink: #b3372f;
+}
+
+.sample-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* The four rules as numbered cards. */
+.hero-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.feature:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--hard);
+}
+
+.feature-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-small);
+}
+
+.feature-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--line-soft);
+}
+
+.feature h3 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.feature p {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* "Connected as … [Switch account]" */
+.connected-as {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: var(--border-width) dashed var(--line-soft);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+/* ---------- Stamp ---------- */
+.stamp {
+  --ink: var(--stamp-ink);
+  display: inline-grid;
+  justify-items: center;
+  gap: 0.1em;
+  padding: 0.35em 0.75em 0.3em;
+  color: var(--ink);
+  border: 0.16em solid var(--ink);
+  border-radius: 0.35em;
+  /* A thin second line inside the border, like a real rubber stamp. */
+  outline: 0.06em solid var(--ink);
+  outline-offset: -0.34em;
+  font-family: 'Arial Black', 'Segoe UI Black', var(--font);
+  line-height: 1;
+  text-transform: uppercase;
+  transform: rotate(-11deg);
+  /* A rough edge, like real ink. Browsers without mask support just show a clean stamp. */
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 2.4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-size: 160px;
+  user-select: none;
+}
+
+.stamp-autoApproved {
+  --ink: var(--stamp-auto-ink);
+}
+
+.stamp-word {
+  font-size: 1.5em;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.stamp-sub {
+  font-family: var(--font);
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.stamp-small {
+  font-size: 0.8rem;
+}
+
+.stamp-big {
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+}
+
+/* A small stamp in the corner of an approved page. */
+.has-stamp {
+  position: relative;
+}
+
+.card-stamp {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  pointer-events: none;
+}
+
+/* The big stamp that drops onto the screen. */
+.stamp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgb(0 0 0 / 16%), transparent 60%);
+  animation: stamp-overlay 2.2s ease forwards;
+}
+
+.stamp-drop {
+  position: relative;
+  animation: stamp-drop 0.55s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+}
+
+/* The ink "splash" when it lands. */
+.stamp-drop::after {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  border: 3px solid var(--stamp-ink);
+  opacity: 0;
+  animation: stamp-ring 0.7s ease-out 0.38s;
+}
+
+.stamp-drop-autoApproved::after {
+  border-color: var(--stamp-auto-ink);
+}
+
+@keyframes stamp-drop {
+  0% {
+    opacity: 0;
+    transform: scale(2.8) translateY(-30px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  80% {
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes stamp-ring {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes stamp-overlay {
+  0%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.card h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.setup-banner {
+  border-left: 7px solid var(--warn);
+}
+
+.setup-banner ol {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.connect-prompt {
+  align-items: flex-start;
+}
+
+/* Empty states and the cheating demo: a dashed outline, like the "nothing here yet" box. */
+.empty,
+.demo {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.logbook-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  font-size: 0.925rem;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count {
+  background: var(--role-soft);
+  color: var(--role);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 0 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+/* ---------- Forms ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field > label,
+.field > legend,
+.hash-check label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 10px 12px;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 3px 3px 0 var(--accent);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.input-row input {
+  flex: 1;
+}
+
+.counter {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.counter.is-over {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.choice:hover {
+  background: var(--accent-soft);
+}
+
+/* The real radio button stays in the page (for the keyboard), just invisible. */
+.choice input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.choice.is-checked {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-small);
+}
+
+.choice:has(input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  color: var(--text);
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-small);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background-color 0.15s ease;
+}
+
+.btn:not(:disabled):hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--hard);
+}
+
+/* Pressed: the button sinks into its shadow. */
+.btn:not(:disabled):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--hard);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* A lone button inside a card or note keeps its own width instead of stretching. */
+.card > .btn {
+  align-self: flex-start;
+}
+
+.note > .btn {
+  justify-self: start;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary:not(:disabled):hover {
+  background: var(--accent-soft);
+}
+
+.btn-approve {
+  background: var(--btn-approve);
+  color: var(--on-accent);
+}
+
+.btn-reject {
+  background: var(--btn-reject);
+  color: #ffffff;
+}
+
+.btn-small {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.72rem;
+  box-shadow: 2px 2px 0 var(--hard);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: var(--surface);
+  color: var(--text);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-small);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.icon-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--hard);
+}
+
+.icon-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--hard);
+}
+
+/* ---------- Notes and errors ---------- */
+.note {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border: var(--border-width) solid var(--line);
+  border-left-width: 6px;
+  border-radius: var(--radius-small);
+  font-size: 0.925rem;
+}
+
+.note-warn {
+  background: var(--warn-soft);
+  border-left-color: var(--warn);
+}
+
+.note-error,
+.note-blocked {
+  background: var(--danger-soft);
+  border-left-color: var(--danger);
+}
+
+.note-ok {
+  background: var(--ok-soft);
+  border-left-color: var(--ok);
+}
+
+.note details summary {
+  cursor: pointer;
+  color: var(--accent-text);
+  font-size: 0.875rem;
+}
+
+.logs {
+  margin: 6px 0 0;
+  max-height: 240px;
+  overflow: auto;
+  padding: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-small);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.tx-status {
+  display: grid;
+  gap: 6px;
+  font-size: 0.925rem;
+}
+
+.tx-phase {
+  font-weight: 600;
+}
+
+.tx-done {
+  color: var(--ok);
+}
+
+/* ---------- Status chips, calendar and legend ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  color: var(--st);
+  background-color: var(--st-bg);
+  border: 1.5px solid var(--st);
+  border-radius: var(--radius-small);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.calendar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 8px;
+}
+
+.cell {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--st);
+  background-color: var(--st-bg);
+  border: var(--border-width) solid var(--st);
+  border-radius: var(--radius-small);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+button.cell:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--hard);
+}
+
+.cell[aria-pressed='true'] {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--hard);
+  outline: 2px solid var(--line);
+  outline-offset: 2px;
+}
+
+.cell-symbol {
+  min-height: 0.9em;
+  font-size: 0.75rem;
+}
+
+.legend {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatch {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--st);
+  background-color: var(--st-bg);
+  border: 1.5px solid var(--st);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+/* State colours. These come after .chip, .cell and .swatch so their border tweaks win. */
+.state-approved {
+  --st: var(--st-approved);
+  --st-bg: var(--st-approved-bg);
+}
+
+.state-autoApproved {
+  /* Its own colour (teal) and stripes tell "approved by silence" apart from a normal approval. */
+  --st: var(--st-auto);
+  --st-bg: var(--st-auto-bg);
+  background-image: repeating-linear-gradient(135deg, transparent 0 5px, var(--stripe) 5px 8px);
+}
+
+.state-rejected {
+  --st: var(--st-rejected);
+  --st-bg: var(--st-rejected-bg);
+}
+
+.state-pending {
+  --st: var(--st-pending);
+  --st-bg: var(--st-pending-bg);
+}
+
+.state-silent {
+  --st: var(--st-silent);
+  --st-bg: var(--st-silent-bg);
+}
+
+.state-missing {
+  --st: var(--st-missing);
+  --st-bg: var(--st-missing-bg);
+  background-image: repeating-linear-gradient(45deg, transparent 0 4px, var(--hatch) 4px 6px);
+}
+
+.state-today {
+  --st: var(--st-today);
+  --st-bg: var(--st-today-bg);
+}
+
+.state-upcoming {
+  --st: var(--st-upcoming);
+  --st-bg: transparent;
+  border-style: dashed;
+}
+
+/* ---------- Today, history, review ---------- */
+.today-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.today-head h3 {
+  font-size: 1.4rem;
+}
+
+.today-clock {
+  font-weight: 600;
+}
+
+.countdown {
+  color: var(--accent-text);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.written {
+  display: grid;
+  gap: 10px;
+}
+
+.summary {
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-small);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.history-row {
+  display: grid;
+  gap: 8px;
+  padding: 14px 0;
+  border-top: 1.5px dashed var(--line-soft);
+}
+
+.history-row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.history-head,
+.review-head,
+.summary-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.history-day {
+  font-weight: 800;
+}
+
+.finalize {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.reject-group {
+  display: flex;
+  gap: 10px;
+}
+
+.reject-group select {
+  width: auto;
+  min-width: 180px;
+}
+
+.intern-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.intern-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+
+/* ---------- Facts and numbers ---------- */
+.facts {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.facts > div {
+  display: grid;
+  grid-template-columns: minmax(110px, 210px) 1fr;
+  gap: 8px;
+}
+
+.facts dt {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.facts dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hash {
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.stats > div {
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-small);
+}
+
+.stats dt {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stats dd {
+  margin: 4px 0 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.summary-grid h4 {
+  margin-bottom: 8px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-small);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-warn {
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1.5px solid var(--warn);
+}
+
+.hash-check {
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1.5px dashed var(--line-soft);
+}
+
+/* ---------- Recent transactions (bottom corner) ---------- */
+.toasts {
+  position: fixed;
+  z-index: 50;
+  right: 16px;
+  bottom: 16px;
+  width: min(380px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 10px 10px 14px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--line);
+  border-left: 7px solid var(--ok);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow);
+  animation: toast-in 0.25s ease both;
+}
+
+.toast-failed {
+  border-left-color: var(--danger);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.toast-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.875rem;
+}
+
+.toast .icon-button {
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  box-shadow: none;
+}
+
+/* ---------- Less motion for people who ask for it ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+
+  .panel,
+  .toast,
+  .stamp-drop,
+  .stamp-drop::after {
+    animation: none;
+  }
+}
+
+/* ---------- Tablets ---------- */
+@media (max-width: 860px) {
+  .hero-features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .main {
+    padding: 14px;
+  }
+
+  .header-inner {
+    padding: 10px 14px;
+  }
+
+  /* On a phone the header shows the logo and the wallet button; the tagline would wrap badly. */
+  .tagline,
+  .network-badge {
+    display: none;
+  }
+
+  .hero-main {
+    grid-template-columns: 1fr;
+    padding: 20px 0 4px;
+    gap: 22px;
+  }
+
+  .hero-actions,
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .sample-page {
+    width: min(100%, 290px);
+  }
+
+  .hero-features {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head {
+    margin-top: 12px;
+  }
+
+  .tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-stamp {
+    position: static;
+    align-self: flex-end;
+    justify-self: end;
+    margin-top: -4px;
+  }
+
+  .toasts {
+    right: 8px;
+    left: 8px;
+    bottom: 8px;
+    width: auto;
+  }
+
+  .actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .input-row {
+    flex-wrap: wrap;
+  }
+
+  .facts > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .reject-group {
+    flex: 1 1 100%;
+  }
+
+  .reject-group select {
+    flex: 1;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Paraf: logbook magang di Solana. Pembimbing diam = disetujui, halaman tidak bisa ditulis mundur, dan siapa saja bisa mengeceknya." />
+    <meta name="color-scheme" content="light" />
+    <title>Paraf · Logbook magang di Solana</title>
+    <script>
+      // Apply the saved light/dark choice before the page draws, so it does not flash.
+      try {
+        var savedTheme = localStorage.getItem('paraf-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

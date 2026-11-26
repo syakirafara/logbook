@@ -1,0 +1,15 @@
+{
+  "name": "paraf-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:program": "node ../scripts/pg-build.mjs --program-id 7T41Lw8GgsWJke86tpVSkMhrVoz6WRLjgiARkH94M11Q --out ../program/target/paraf-test.so",
+    "test": "node --test --test-reporter=spec",
+    "smoke:devnet": "node devnet-smoke.mjs"
+  },
+  "dependencies": {
+    "@blueshift-gg/quasar-svm": "0.1.5",
+    "@coral-xyz/anchor": "0.29.0",
+    "@solana/web3.js": "1.99.0"
+  }
+}

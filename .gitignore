@@ -1,0 +1,19 @@
+# Secret keys: never commit these
+*keypair*.json
+*-keypair.json
+wallet*.json
+id.json
+.env
+.env.*
+!.env.example
+
+# Build output
+node_modules/
+dist/
+program/target/
+program/.pg-uuid*
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db
