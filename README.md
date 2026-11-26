@@ -7,7 +7,7 @@ Paraf is an internship logbook on Solana. Interns write one page per day, superv
 | | |
 |---|---|
 | Program ID (devnet) | `C5gK2wuixKeNhcjAhLE2jzwNG3NwbD4ca1AQyznmnPH4` · [Explorer](https://explorer.solana.com/address/C5gK2wuixKeNhcjAhLE2jzwNG3NwbD4ca1AQyznmnPH4?cluster=devnet) |
-| Live demo | `TBD` (Vercel URL) |
+| Live demo | [logbook-sooty-eight.vercel.app](https://logbook-sooty-eight.vercel.app) |
 | Demo video | `TBD` (under 3 minutes) |
 
 ## The problem
