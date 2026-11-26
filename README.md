@@ -8,6 +8,8 @@ Paraf is an internship logbook on Solana. Interns write one page per day, superv
 |---|---|
 | Program ID (devnet) | `C5gK2wuixKeNhcjAhLE2jzwNG3NwbD4ca1AQyznmnPH4` · [Explorer](https://explorer.solana.com/address/C5gK2wuixKeNhcjAhLE2jzwNG3NwbD4ca1AQyznmnPH4?cluster=devnet) |
 | Live demo | [logbook-sooty-eight.vercel.app](https://logbook-sooty-eight.vercel.app) |
+| Sample logbook (no wallet needed) | [open](https://logbook-sooty-eight.vercel.app/?i=6k6SrUa2xmmpK2UA6MdDroDU2maJhuUBDiieWUsN5G26) |
+| User guide (Bahasa Indonesia) | [docs/CARA-PAKAI.md](docs/CARA-PAKAI.md) |
 | Demo video | `TBD` (under 3 minutes) |
 
 ## The problem
@@ -54,6 +56,41 @@ The program enforces four rules:
 | `claim_stipend` | intern | Pays every approved day not yet paid, keeping the account rent-exempt. |
 
 Every instruction emits an event, and every failure returns a named error (16 in total).
+
+## Tested on devnet
+
+Every rule was exercised on real devnet on 2026-11-25, once by a script (`tests/devnet-smoke.mjs`, run with `npm run smoke:devnet`) and once by hand through the web app with Phantom.
+
+| Check | Script | Web + Phantom |
+|---|---|---|
+| Register an internship; the stipend is locked at once | ✔ | ✔ |
+| Intern writes today's page | ✔ | ✔ |
+| Writing yesterday's page (backdating) | ✔ refused | – |
+| Writing tomorrow's page early | ✔ refused | – |
+| Supervisor approves / rejects | ✔ | ✔ (approve) |
+| A stranger tries to review | ✔ refused | – |
+| Finalizing before the review window closes | ✔ refused | – |
+| Supervisor stays silent, page is auto-approved | ✔ | ✔ |
+| Stipend paid only for approved days | ✔ (2 of 4) | ✔ (2 of 3) |
+| Claiming the stipend twice | ✔ refused | – |
+| Anyone can read the logbook without a wallet | ✔ | ✔ |
+
+Both results stay on devnet and open without a wallet:
+
+- [Script run](https://logbook-sooty-eight.vercel.app/?i=6k6SrUa2xmmpK2UA6MdDroDU2maJhuUBDiieWUsN5G26): day 1 auto-approved, day 2 approved, day 3 missed, day 4 rejected.
+- [Web run](https://logbook-sooty-eight.vercel.app/?i=77vHcgxVdiZBkBQumZ1njj8Cp4gppqikSM5mahMPSXXs): day 1 approved, day 2 auto-approved, day 3 missed.
+
+## Try it in the browser
+
+Open the [live demo](https://logbook-sooty-eight.vercel.app). Reading a logbook needs no wallet. To write, approve or register, set up a wallet:
+
+1. Install [Phantom](https://phantom.com) and create a wallet. Keep the 12-word Secret Recovery Phrase offline and never share it.
+2. In Phantom: **Settings → Developer Settings → Testnet Mode → Solana Devnet**.
+3. Get free devnet SOL at [faucet.solana.com](https://faucet.solana.com). About 0.1 SOL is plenty for every role.
+4. Click **Pilih Dompet** in the app and connect. Every action opens Phantom: click **Confirm** within about a minute, or the transaction expires.
+5. To play several roles alone, add accounts in Phantom (intern and supervisor must be different wallets). After switching accounts in Phantom, click **Ganti akun** in the app.
+
+The full step-by-step guide, including wallet setup and a 3-person demo script, is in Indonesian: [docs/CARA-PAKAI.md](docs/CARA-PAKAI.md).
 
 ## Tech stack
 
