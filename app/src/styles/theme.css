@@ -44,8 +44,8 @@
   --role-intern-soft: #f3e6d8;
   --role-supervisor: #a35566;
   --role-supervisor-soft: #f2e0e3;
-  --role-verify: #5c6470;
-  --role-verify-soft: #e4e6e9;
+  --role-verify: #5b9bd5;
+  --role-verify-soft:#dbeafe;
 
   /* Day and page states (text/border colour, then background). */
   --st-approved: #3f7a3a;
